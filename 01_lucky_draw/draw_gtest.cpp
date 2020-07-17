@@ -1,7 +1,5 @@
 
 #include "draw.h"
-#include <stdio.h>
-#include <direct.h>
 #include "gtest/gtest.h"
 
 GTEST_API_ int main(int argc, char **argv) {
@@ -9,9 +7,21 @@ GTEST_API_ int main(int argc, char **argv) {
   return RUN_ALL_TESTS();
 }
 
-TEST(test_my_draw, do_test_my_draw)
+TEST(TestNullInput, DoTestNullInput)
 {
-    int a[10]={0};
-	int b = lucky_draw(a);
-	ASSERT_TRUE(b == 1);
+	ASSERT_THROW(lucky_draw(NULL), int);
+}
+
+TEST(TestLoopFinished, DoTestLoopFinished)
+{
+	int data[ID_QTY] = { 0 };
+	for (size_t i = 0; i < ID_QTY; i++)
+	{
+		data[i] = i;
+	}
+	for (size_t i = 0; i < ID_QTY; i++)
+	{
+		lucky_draw(data);
+	}
+	ASSERT_THROW(lucky_draw(data), int);
 }

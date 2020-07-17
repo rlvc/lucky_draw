@@ -1,14 +1,9 @@
 cmake_minimum_required(VERSION 3.10)
 project(lucky_draw)
-message("PROJECT_SOURCE_DIR: ${PROJECT_SOURCE_DIR}")
-
-include_directories(${PROJECT_SOURCE_DIR}/src)
 
 file(GLOB LUCKY_DRAW_FILE "${PROJECT_SOURCE_DIR}/draw.h" "${PROJECT_SOURCE_DIR}/draw.cc")
-
-message("LUCKY_DRAW_FILE: ${LUCKY_DRAW_FILE}")
-
 add_library(lucky_draw SHARED ${LUCKY_DRAW_FILE})
+
 set(GOOGLETEST_LIBRARIES gmock gtest)
 set(GOOGLETEST_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/googletest-distribution/include)
 set(GOOGLETEST_LIBRARIES_DIRS ${PROJECT_SOURCE_DIR}/googletest-distribution/lib)

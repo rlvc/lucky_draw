@@ -1,20 +1,17 @@
 #ifndef _LUCKY_DRAW_H_
 #define _LUCKY_DRAW_H_
 
-#if defined(__CYGWIN32__)
-	#define LOTUS_INTERFACE_API __stdcall
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(_WIN64) || defined(WINAPI_FAMILY) || defined(__CYGWIN32__)
 	#define LOTUS_INTERFACE_EXPORT __declspec(dllexport)
-#elif defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(_WIN64) || defined(WINAPI_FAMILY)
-	#define LOTUS_INTERFACE_API __stdcall
-	#define LOTUS_INTERFACE_EXPORT __declspec(dllexport)
-#elif defined(__MACH__) || defined(__ANDROID__) || defined(__linux__) || defined(__QNX__)
-	#define LOTUS_INTERFACE_API
-	#define LOTUS_INTERFACE_EXPORT
 #else
-	#define LOTUS_INTERFACE_API
 	#define LOTUS_INTERFACE_EXPORT
 #endif
+#define ERROR_UNDEFINED			  0x08000000
+#define ERROR_INVALID_PARAM		  0x08000001
+#define WARNNING_LOOP_FINISH	  0x08000002
 
-LOTUS_INTERFACE_EXPORT int lucky_draw (int persons[]);
+#define ID_QTY 100
+
+LOTUS_INTERFACE_EXPORT int lucky_draw(int persons[]);
  
 #endif

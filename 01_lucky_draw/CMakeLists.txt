@@ -4,28 +4,9 @@ project(lucky_draw)
 file(GLOB LUCKY_DRAW_FILE "${PROJECT_SOURCE_DIR}/draw.h" "${PROJECT_SOURCE_DIR}/draw.cc")
 add_library(lucky_draw SHARED ${LUCKY_DRAW_FILE})
 
-set(GOOGLETEST_LIBRARIES gmock gtest)
-set(GOOGLETEST_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/googletest-distribution/include)
-set(GOOGLETEST_LIBRARIES_DIRS ${PROJECT_SOURCE_DIR}/googletest-distribution/lib)
- foreach(_lib ${GOOGLETEST_LIBRARIES})
-
-    add_library(${_lib} STATIC IMPORTED GLOBAL)
-
-	set_target_properties(${_lib} PROPERTIES
-	    IMPORTED_IMPLIB_DEBUG "${GOOGLETEST_LIBRARIES_DIRS}/${_lib}d.lib"
-	    IMPORTED_LINK_INTERFACE_LIBRARIES_DEBUG ""
-	    IMPORTED_LOCATION_DEBUG "${GOOGLETEST_LIBRARIES_DIRS}/${_lib}d.lib"
-	)
-
-	set_target_properties(${_lib} PROPERTIES
-	    IMPORTED_IMPLIB_RELEASE "${GOOGLETEST_LIBRARIES_DIRS}/${_lib}.lib"
-	    IMPORTED_LINK_INTERFACE_LIBRARIES_RELEASE ""
-	    IMPORTED_LOCATION_RELEASE "${GOOGLETEST_LIBRARIES_DIRS}/${_lib}.lib"
-	)
-  
-endforeach()
-include_directories(${GOOGLETEST_INCLUDE_DIRS})
-message("GOOGLETEST_INCLUDE_DIRS: ${GOOGLETEST_INCLUDE_DIRS}")
+find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIRS})
+message("GTEST_INCLUDE_DIRS: ${GTEST_INCLUDE_DIRS}")
 
 file(GLOB TEST_SOURCES "draw_gtest.cpp")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
@@ -35,5 +16,6 @@ add_executable(lucky_draw_test ${TEST_SOURCES})
 
 target_link_libraries(lucky_draw_test
                       lucky_draw
-                      ${GOOGLETEST_LIBRARIES}
+                      ${GTEST_LIBRARIES}
+			pthread
                       )
